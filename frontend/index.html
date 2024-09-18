@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Étudiants</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    table {
+      width: 50%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Liste des Étudiants</h2>
+
+  <!-- Table qui affichera les étudiants -->
+  <table id="etudiantsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Âge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Les données seront insérées ici via jQuery -->
+    </tbody>
+  </table>
+
+  <script>
+    // Effectuer un appel AJAX pour récupérer les étudiants
+    $(document).ready(function() {
+      $.ajax({
+        url: 'http://localhost:3000/api/etudiants',  // L'URL de votre API Express
+        method: 'GET',
+        success: function(data) {
+          // On boucle sur les données reçues pour les insérer dans le tableau
+          data.forEach(function(etudiant) {
+            $('#etudiantsTable tbody').append(
+              `<tr>
+                <td>${etudiant.id}</td>
+                <td>${etudiant.nom}</td>
+                <td>${etudiant.age}</td>
+              </tr>`
+            );
+          });
+        },
+        error: function(error) {
+          console.error("Erreur lors de la récupération des données", error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
