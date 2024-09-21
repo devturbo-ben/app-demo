@@ -1,0 +1,20 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+    - nodejs
+    - npm
+    - git
+
+runcmd:
+  - git clone  https://github.com/devturbo-ben/app-demo.git
+  - sudo cd app-demo/backend
+  - sudo npm install
+  - sudo npm install -g pm2
+  - pm2 start index.js
+  - pm2 startup
+  - pm2 save
+  - sudo rm -rf /app-demo
+  - systemctl start nginx
+  - systemctl enable nginx

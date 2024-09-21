@@ -1,0 +1,15 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+  - git
+
+runcmd:
+  - git clone  https://github.com/devturbo-ben/app-demo.git
+  - sudo rm -rf /var/share/nginx/html
+  - sudo mv /app-demo/frontend/* /usr/share/nginx/html
+  - sudo rm -rf /app-demo
+  - systemctl start nginx
+  - systemctl enable nginx
+ 
